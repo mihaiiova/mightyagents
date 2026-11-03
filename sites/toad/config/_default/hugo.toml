@@ -1,6 +1,6 @@
 baseURL = "https://toad.mightyagents.dev/"
-title = "TOaD"
-languageCode = "en"
+title = "Toad"
+locale = "en"
 theme = "mighty"
 themesDir = "../../themes"
 disableKinds = ["taxonomy", "term", "RSS"]
@@ -8,11 +8,13 @@ enableRobotsTXT = true
 
 [params]
   kind = "docs"
+  logo = "logo-toad.html"
   tagline = "a testing agent your coding agent can call"
-  description = "TOaD tests the web apps and CLIs you build, in a real browser or a sandboxed container, and returns a verdict with receipts. Docs for installing, connecting and using it."
-  groups = ["Getting started", "Using TOaD", "Under the hood", "Reference"]
+  description = "Toad tests the web apps and CLIs you build, in a real browser or a sandboxed container, and returns a verdict with receipts. Docs for installing, connecting and using it."
+  groups = ["Getting started", "Using Toad", "Under the hood", "Reference"]
   [params.links]
     home = "https://mightyagents.dev/"
+    forge = "https://forge.mightyagents.dev/"
 
 [markup]
   [markup.highlight]

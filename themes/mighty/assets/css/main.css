@@ -330,3 +330,4 @@ code, pre, kbd { font-family: var(--mono); font-size: 0.875em; }
 /* fixes */
 .agent > * { min-width: 0; }
 .doc .lead + h2 { border-top: 0; padding-top: 0; margin-top: 8px; }
+.agent + .agent { margin-top: 20px; }

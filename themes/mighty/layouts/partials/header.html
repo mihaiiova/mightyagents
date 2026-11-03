@@ -2,7 +2,7 @@
 <header class="top{{ if $docs }} top--docs{{ end }}">
   <div class="wrap">
     {{- if $docs }}
-    <a class="mark" href="{{ "/" | relURL }}" aria-label="{{ site.Title }} docs home">{{ partial "logo-toad.html" (dict "size" 24) }}<span>{{ site.Title }} <span class="sub">docs</span></span></a>
+    <a class="mark" href="{{ "/" | relURL }}" aria-label="{{ site.Title }} docs home">{{ partial site.Params.logo (dict "size" 24) }}<span>{{ site.Title }} <span class="sub">docs</span></span></a>
     {{- else }}
     <a class="mark" href="{{ "/" | relURL }}" aria-label="Mighty Agents home">{{ partial "logo-mighty.html" "h" }}<span>Mighty Agents</span></a>
     {{- end }}

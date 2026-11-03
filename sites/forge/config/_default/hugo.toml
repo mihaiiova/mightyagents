@@ -1,0 +1,41 @@
+baseURL = "https://forge.mightyagents.dev/"
+title = "Pi Forge"
+locale = "en"
+theme = "mighty"
+themesDir = "../../themes"
+disableKinds = ["taxonomy", "term", "RSS"]
+enableRobotsTXT = true
+
+[params]
+  kind = "docs"
+  logo = "logo-forge.html"
+  tagline = "design, generate, check and revise specialized Pi agents"
+  description = "Pi Forge designs the simplest agent for the outcome you describe, generates it as a plain Pi project, and keeps it working as your needs change."
+  groups = ["Getting started", "Building agents", "Running agents", "Reference"]
+  [params.links]
+    home = "https://mightyagents.dev/"
+    toad = "https://toad.mightyagents.dev/"
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[[menus.main]]
+  name = "Install"
+  url = "/install/"
+  weight = 1
+  [menus.main.params]
+    class = "hide-sm"
+[[menus.main]]
+  name = "GitHub"
+  url = "https://github.com/mihaiiova/pi-forge"
+  weight = 2
+[[menus.main]]
+  name = "Mighty Agents"
+  url = "https://mightyagents.dev/"
+  weight = 3
+  [menus.main.params]
+    class = "hide-sm"

@@ -6,7 +6,11 @@
     var cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
     var next = cur === "light" ? "dark" : "light";
     root.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch (e) {}
+    try {
+      var d = /(^|\.)mightyagents\.dev$/.test(location.hostname) ? "; domain=mightyagents.dev" : "";
+      document.cookie = "theme=" + next + "; path=/; max-age=31536000; SameSite=Lax" + d;
+      localStorage.setItem("theme", next);
+    } catch (e) {}
   });
   document.querySelectorAll(".doc pre").forEach(function (pre) {
     if (!navigator.clipboard) return;

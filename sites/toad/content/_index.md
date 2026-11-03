@@ -1,11 +1,11 @@
 ---
-title: TOaD
-nav: What is TOaD?
-lead: A testing agent for the web apps and command-line programs you build. You say what should work, in plain words. TOaD tests it and comes back with a verdict and the receipts to prove it.
+title: Toad
+nav: What is Toad?
+lead: A testing agent for the web apps and command-line programs you build. You say what should work, in plain words. Toad tests it and comes back with a verdict and the receipts to prove it.
 ---
 
-TOaD is built to be called by your coding agent: Claude Code, Pi, Codex,
-Cursor or any MCP client. The agent hands TOaD a test, TOaD runs it
+Toad is built to be called by your coding agent: Claude Code, Pi, Codex,
+Cursor or any MCP client. The agent hands Toad a test, Toad runs it
 independently, and the agent gets back **evidence instead of its own opinion
 of its work**.
 
@@ -38,7 +38,7 @@ it in the [run viewer](/viewer/).
 1. You ask your coding agent, in plain words, to test something.
 2. The agent writes a **handoff**: the target, the goal, and scenarios with
    expected outcomes. Secrets go in by name only, never by value.
-3. TOaD's **lead** agent splits the handoff into scenarios and gives each to a
+3. Toad's **lead** agent splits the handoff into scenarios and gives each to a
    specialist: a **web-tester** that drives the browser, or a **cli-tester**
    that runs commands in the sandbox.
 4. The testers report only what they observed. The lead writes the report,
@@ -46,8 +46,15 @@ it in the [run viewer](/viewer/).
 
 More detail is in [How it's built](/how-its-built/).
 
+## Built with Pi Forge
+
+Toad's testing agent was designed and generated with
+[Pi Forge]({{< link forge >}}), the workshop the Mighty Agents come from, and
+it pins a Forge release like any other generated agent. In return, Toad is
+what tests Pi Forge. Each keeps the other honest.
+
 ## Next
 
-- [Install TOaD](/install/), about five minutes.
+- [Install Toad](/install/), about five minutes.
 - [Connect your coding agent](/connect/).
 - [Test your first project](/test-a-project/).

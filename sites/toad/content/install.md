@@ -2,7 +2,7 @@
 title: Install
 group: Getting started
 weight: 10
-lead: One command installs TOaD, and one more sets everything up. You can run setup again at any time.
+lead: One command installs Toad, and one more sets everything up. You can run setup again at any time.
 ---
 
 ## Requirements
@@ -16,7 +16,7 @@ lead: One command installs TOaD, and one more sets everything up. You can run se
 On Linux without Docker or Podman, CLI tests can use
 [Bubblewrap](https://github.com/containers/bubblewrap) 0.8 or later instead.
 
-> **Windows:** TOaD's code is written to run there, but it is not verified
+> **Windows:** Toad's code is written to run there, but it is not verified
 > yet, and the Pi Forge workflow runner it builds on has not been tested on
 > Windows. Use WSL until a release says otherwise.
 
@@ -27,7 +27,7 @@ npm install -g github:mihaiiova/toad
 toad setup
 ```
 
-TOaD installs straight from GitHub for now; it is not on npm yet. Add
+Toad installs straight from GitHub for now; it is not on npm yet. Add
 `#<tag-or-commit>` to the package name to install a specific version instead
 of `main`.
 
@@ -43,7 +43,7 @@ of `main`.
    image (`node:22-bookworm`, about 1 GB; otherwise it downloads on the first
    CLI test).
 5. Finds Claude Code, Codex and Pi on your machine and offers to register
-   TOaD with each.
+   Toad with each.
 
 `toad setup --yes` accepts every default without asking. It then takes the
 key from `DEEPSEEK_API_KEY`.

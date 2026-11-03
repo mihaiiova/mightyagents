@@ -3,10 +3,10 @@ title: Connect your coding agent
 nav: Connect your agent
 group: Getting started
 weight: 20
-lead: "`toad setup` registers TOaD with the coding agents it finds. This page is for doing it by hand, or for clients it doesn't know."
+lead: "`toad setup` registers Toad with the coding agents it finds. This page is for doing it by hand, or for clients it doesn't know."
 ---
 
-TOaD is one MCP server, started with the command `toad mcp`. Register it once:
+Toad is one MCP server, started with the command `toad mcp`. Register it once:
 every project uses the same server, and each call says which project it is
 for.
 
@@ -18,7 +18,7 @@ for.
 | Codex | `codex mcp add toad -- toad mcp` |
 | Pi | `pi mcp add toad -- toad mcp` |
 
-For Pi, also set `"requestTimeoutMs": 900000` on TOaD's entry in
+For Pi, also set `"requestTimeoutMs": 900000` on Toad's entry in
 `~/.pi/agent/mcp.json`, so long runs are not cut off.
 
 ## Any other MCP client
@@ -36,13 +36,13 @@ settings:
 
 ## Timeouts
 
-TOaD sends progress every 15 seconds while it tests, so clients that reset
+Toad sends progress every 15 seconds while it tests, so clients that reset
 their timeout on progress wait for long runs. If yours does not, raise its MCP
 tool timeout to 15 minutes or more.
 
 ## Check the connection
 
-Restart the coding agent, then ask it to *"list the TOaD tools"*. You should
+Restart the coding agent, then ask it to *"list the Toad tools"*. You should
 see:
 
 - `get_toad_guide`
@@ -53,4 +53,4 @@ see:
 The server also gives the agent a guide on how to write good tests and handle
 credentials, through the `get_toad_guide` tool and the `toad://guide`
 resource. Most clients pick it up from the server's instructions. If yours
-does not, tell the agent: *"Call get_toad_guide before using TOaD."*
+does not, tell the agent: *"Call get_toad_guide before using Toad."*

@@ -1,0 +1,17 @@
+<div class="term" role="img" aria-label="Example: Pi Forge designs a small agent, previews the files it will generate, and writes them after you confirm">
+  <div class="term-bar"><i></i><i></i><i></i><span>pi · ~/agents</span></div>
+<pre><span class="u">&gt; /faur a desk that reads new papers on agents
+  every Monday and writes me a one-page brief</span>
+
+<span class="b">⏺ forge · discover</span>  <span class="d">models 6 · skills 14 · mcp 2</span>
+  Simplest fit: a <span class="u">lead</span> and one <span class="u">reader</span>.
+  <span class="d">lead</span>    deepseek-flash   writes the brief
+  <span class="d">reader</span>  deepseek-flash   mcp:arxiv, skill:notes
+
+<span class="b">⏺ forge · generate --dry-run</span>
+  <span class="ok">+</span> .pi/system.yaml      <span class="ok">+</span> .pi/agents/reader.md
+  <span class="ok">+</span> .pi/skills/notes/    <span class="ok">+</span> run
+
+<span class="u">  Write these files? </span><span class="d">[y/N]</span> <span class="u">y</span>
+  <span class="ok">✓</span> paper-desk is ready. Start it with <span class="u">./run</span></pre>
+</div>

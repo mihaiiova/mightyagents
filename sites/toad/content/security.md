@@ -2,12 +2,12 @@
 title: Security and limits
 group: Under the hood
 weight: 60
-lead: TOaD is a tool for testing your own code with test accounts. Here is exactly what it protects, and what it doesn't.
+lead: Toad is a tool for testing your own code with test accounts. Here is exactly what it protects, and what it doesn't.
 ---
 
 ## It runs with your permissions
 
-The agent, its tools and the browser run as your user. Use TOaD on code and
+The agent, its tools and the browser run as your user. Use Toad on code and
 sites you trust, with test accounts and restricted keys.
 
 ## The CLI sandbox limits damage
@@ -33,7 +33,7 @@ hostile process of your user is racing them.
   whole environment to Pi, its tools and subprocesses, and other processes of
   your user can read it. A tested program can send credentials over the
   network or write them into its workspace.
-- After the run, TOaD removes the per-run file. If Forge reports incomplete
+- After the run, Toad removes the per-run file. If Forge reports incomplete
   cleanup, or the server is killed, the file stays in the runtime folder's
   `secrets/` and the result names it. Remove it once no process can still be
   using it.

@@ -19,8 +19,8 @@ lead ─────────────────── plans scenarios, 
  └─ cli-tester ───────── toad-exec in a sandbox       → command records
 ```
 
-- **`agent/`** is the testing agent, a [Pi Forge](https://github.com/mihaiiova/pi-forge)
-  project. A **lead** plans the request into scenarios and hands each to a
+- **`agent/`** is the testing agent, a [Pi Forge]({{< link forge >}})
+  project: Forge designed and generated it, and Toad tests Forge in return. A **lead** plans the request into scenarios and hands each to a
   specialist: a **web-tester** that drives Chromium through the
   [Playwright MCP](https://github.com/microsoft/playwright-mcp), or a
   **cli-tester** that runs commands through `agent/tools/toad-exec.mjs`. Its

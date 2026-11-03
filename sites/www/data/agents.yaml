@@ -1,17 +1,36 @@
 # The agents listed on mightyagents.dev, in order. Only list what is ready to share.
 - id: toad
-  name: TOaD
+  name: Toad
   version: v0.3.0
   kind: MCP server
   logo: logo-toad.html
   term: term-toad.html
   summary: >-
     A testing agent for the web apps and command-line programs you build.
-    Tell your coding agent what should work. TOaD tests it in a real browser
+    Tell your coding agent what should work. Toad tests it in a real browser
     or a sandboxed container and hands back a verdict with receipts, not an opinion.
   points:
     - Web apps in headless Chromium, with screenshots of every step
     - CLIs in a locked-down container, with every command recorded
     - Works with Claude Code, Codex, Pi, Cursor or any MCP client
+    - Built with Pi Forge, and the agent that tests Pi Forge
   install: npm install -g github:mihaiiova/toad && toad setup
   repo: https://github.com/mihaiiova/toad
+
+- id: forge
+  name: Pi Forge
+  version: v0.29.1
+  kind: Pi package
+  logo: logo-forge.html
+  term: term-forge.html
+  summary: >-
+    The workshop the other agents come from. Describe the outcome you want;
+    Forge designs the simplest agent that gets there, generates it as a plain
+    Pi project, and keeps it working as your needs change.
+  points:
+    - A design conversation, not a form, and nothing is written until you confirm
+    - Models, skills, MCP servers and CLI permissions chosen per agent
+    - Checks and revisions with a diff you approve, release pins you can roll back
+    - Toad was built with it, and it is tested with Toad
+  install: pi install git:github.com/mihaiiova/pi-forge@v0.29.1
+  repo: https://github.com/mihaiiova/pi-forge

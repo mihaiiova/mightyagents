@@ -1,6 +1,6 @@
 baseURL = "https://mightyagents.dev/"
 title = "Mighty Agents"
-languageCode = "en"
+locale = "en"
 theme = "mighty"
 themesDir = "../../themes"
 disableKinds = ["taxonomy", "term", "RSS", "section"]
@@ -13,6 +13,7 @@ enableRobotsTXT = true
   [params.links]
     home = "https://mightyagents.dev/"
     toad = "https://toad.mightyagents.dev/"
+    forge = "https://forge.mightyagents.dev/"
 
 [[menus.main]]
   name = "Agents"

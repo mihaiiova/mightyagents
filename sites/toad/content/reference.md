@@ -2,14 +2,14 @@
 title: Reference
 group: Reference
 weight: 70
-lead: Commands, MCP tools, the handoff format, where TOaD keeps things, and the settings you can change.
+lead: Commands, MCP tools, the handoff format, where Toad keeps things, and the settings you can change.
 ---
 
 ## Commands
 
 | Command | |
 |---|---|
-| `toad setup` | Prepare or repair everything TOaD needs. Flags: `--yes`, `--no-register`, `--skip-browser`, `--skip-image`, `--force` |
+| `toad setup` | Prepare or repair everything Toad needs. Flags: `--yes`, `--no-register`, `--skip-browser`, `--skip-image`, `--force` |
 | `toad doctor` | Check the agent, model key, browser, CLI sandbox and coding agents |
 | `toad update` | Install the latest version from GitHub and prepare it |
 | `toad mcp` | The MCP server; coding agents start it |
@@ -57,7 +57,7 @@ For `"kind": "cli"`, the target is:
 ```
 
 `image` is optional. Fields left out of `target`, and the timeout, come from
-`toad.yaml`; the handoff wins where both are set. Without scenarios, TOaD
+`toad.yaml`; the handoff wins where both are set. Without scenarios, Toad
 derives them from the goal.
 
 ### Result
@@ -76,7 +76,7 @@ A run that could not complete is a tool error; a failing test is not.
 
 ## Where things live
 
-TOaD is installed once; everything about a project stays in that project.
+Toad is installed once; everything about a project stays in that project.
 
 | Where | What |
 |---|---|
@@ -95,11 +95,11 @@ Environment variables, set where the MCP server is registered:
 | Variable | Default | |
 |---|---|---|
 | `DEEPSEEK_API_KEY` | the saved key | The model key; overrides the one `toad setup` saved |
-| `TOAD_MAX_CONCURRENT_RUNS` | `2` | Runs at once across every TOaD server on the machine; further calls wait |
+| `TOAD_MAX_CONCURRENT_RUNS` | `2` | Runs at once across every Toad server on the machine; further calls wait |
 | `TOAD_CLI_SANDBOX` | `auto` | `container`, `bwrap`, or `auto` (a running container runtime, else Bubblewrap) |
 | `TOAD_CONTAINER_RUNTIME` | first that answers | `docker` or `podman` |
 | `TOAD_CLI_IMAGE` | `node:22-bookworm` | Image for CLI tests when the project does not set one |
 | `TOAD_COMMAND_TIMEOUT_S` | `120` | Time limit for each CLI command |
 | `TOAD_SCENARIO_TTL_DAYS` | `7` | When unused CLI workspaces are removed; `0` keeps them |
-| `TOAD_CONFIG_DIR`, `TOAD_DATA_DIR`, `TOAD_CACHE_DIR`, `TOAD_RUNTIME_DIR` | see above | Move TOaD's per-user folders |
+| `TOAD_CONFIG_DIR`, `TOAD_DATA_DIR`, `TOAD_CACHE_DIR`, `TOAD_RUNTIME_DIR` | see above | Move Toad's per-user folders |
 | `TOAD_AGENT_DIR` | the prepared agent | Use an agent somewhere else |
