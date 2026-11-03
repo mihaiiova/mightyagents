@@ -10,7 +10,7 @@ enableRobotsTXT = true
   kind = "docs"
   logo = "logo-toad.html"
   tagline = "a testing agent your coding agent can call"
-  description = "Toad tests the web apps and CLIs you build, in a real browser or a sandboxed container, and returns a verdict with receipts. Docs for installing, connecting and using it."
+  description = "Toad tests the web apps, CLIs and HTTP APIs you build, in a real browser or a sandbox, and returns a verdict with receipts. Docs for installing, connecting and using it."
   groups = ["Getting started", "Using Toad", "Under the hood", "Reference"]
   [params.links]
     home = "https://mightyagents.dev/"

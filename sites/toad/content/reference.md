@@ -9,7 +9,7 @@ lead: Commands, MCP tools, the handoff format, where Toad keeps things, and the 
 
 | Command | |
 |---|---|
-| `toad setup` | Prepare or repair everything Toad needs. Flags: `--yes`, `--no-register`, `--skip-browser`, `--skip-image`, `--force` |
+| `toad setup` | Prepare or repair everything Toad needs. Flags: `--yes`, `--no-register`, `--skip-browser`, `--skip-image`, `--force`, `--model`, `--lead-model`, `--tester-model` |
 | `toad doctor` | Check the agent, model key, browser, CLI sandbox and coding agents |
 | `toad update` | Install the latest version from GitHub and prepare it |
 | `toad mcp` | The MCP server; coding agents start it |
@@ -56,7 +56,14 @@ For `"kind": "cli"`, the target is:
 { "workdir": "/abs/path", "program": "node dist/cli.js", "image": "node:22-bookworm" }
 ```
 
-`image` is optional. Fields left out of `target`, and the timeout, come from
+For `"kind": "api"`, the target is:
+
+```json
+{ "url": "http://localhost:8080/api", "spec": "openapi.yaml", "workdir": "/abs/path", "image": "node:22-bookworm" }
+```
+
+Only `url` is required for API tests; `workdir` defaults to the project and
+`spec` is relative to it. CLI and API `image` is optional. Fields left out of `target`, and the timeout, come from
 `toad.yaml`; the handoff wins where both are set. Without scenarios, Toad
 derives them from the goal.
 
@@ -81,7 +88,7 @@ Toad is installed once; everything about a project stays in that project.
 | Where | What |
 |---|---|
 | `<project>/.toad/` | defaults, secret values, runs |
-| `~/.config/toad/` | `projects.json` (the viewer's list), `credentials.json` (the model key) |
+| `~/.config/toad/` | `projects.json` (the viewer's list), `credentials.json` (model keys), `settings.json` (model choices) |
 | `~/.local/share/toad/agent/<version>/` | the prepared agent; older versions are removed on update |
 | `~/.cache/toad/scenarios/` | CLI workspaces, removed after 7 days unused |
 | `$XDG_RUNTIME_DIR/toad/` | run slots and per-run secret files (falls back to a private folder in the system temp directory) |
@@ -94,7 +101,7 @@ Environment variables, set where the MCP server is registered:
 
 | Variable | Default | |
 |---|---|---|
-| `DEEPSEEK_API_KEY` | the saved key | The model key; overrides the one `toad setup` saved |
+| Provider API key, e.g. `DEEPSEEK_API_KEY` | the saved key | The provider key; overrides the one `toad setup` saved |
 | `TOAD_MAX_CONCURRENT_RUNS` | `2` | Runs at once across every Toad server on the machine; further calls wait |
 | `TOAD_CLI_SANDBOX` | `auto` | `container`, `bwrap`, or `auto` (a running container runtime, else Bubblewrap) |
 | `TOAD_CONTAINER_RUNTIME` | first that answers | `docker` or `podman` |

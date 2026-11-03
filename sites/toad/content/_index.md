@@ -1,7 +1,7 @@
 ---
 title: Toad
 nav: What is Toad?
-lead: A testing agent for the web apps and command-line programs you build. You say what should work, in plain words. Toad tests it and comes back with a verdict and the receipts to prove it.
+lead: A testing agent for the web apps, command-line programs and HTTP APIs you build. You say what should work, in plain words. Toad tests it and comes back with a verdict and the receipts to prove it.
 ---
 
 Toad is built to be called by your coding agent: Claude Code, Pi, Codex,
@@ -21,7 +21,7 @@ Every run ends with:
   (the site was down, a secret was missing) is `ERROR`, never a quiet `FAIL`.
 - **A report per scenario**: what was done, what was expected, what happened.
 - **Receipts**: a screenshot for every web step, and a record of every
-  command (exit code, output, duration) for CLI steps.
+  command or request for CLI and API steps.
 
 Everything is saved in your project under `.toad/runs/`, and you can browse
 it in the [run viewer](/viewer/).
@@ -32,6 +32,7 @@ it in the [run viewer](/viewer/).
 |---|---|
 | **Web apps** | A real headless Chromium on your machine, so `localhost` works. It clicks, types and submits forms. |
 | **CLIs** | A copy of your project in a locked-down Linux container (Docker or Podman), or Bubblewrap on Linux. It never changes your files. |
+| **HTTP APIs** | Requests from the same sandbox, with recorded responses and optional OpenAPI checks. |
 
 ## How a run works
 
@@ -39,8 +40,8 @@ it in the [run viewer](/viewer/).
 2. The agent writes a **handoff**: the target, the goal, and scenarios with
    expected outcomes. Secrets go in by name only, never by value.
 3. Toad's **lead** agent splits the handoff into scenarios and gives each to a
-   specialist: a **web-tester** that drives the browser, or a **cli-tester**
-   that runs commands in the sandbox.
+   specialist: a **web-tester** that drives the browser, a **cli-tester**
+   that runs commands, or an **api-tester** that sends HTTP requests.
 4. The testers report only what they observed. The lead writes the report,
    and your agent gets the verdict, the report and the receipt paths.
 

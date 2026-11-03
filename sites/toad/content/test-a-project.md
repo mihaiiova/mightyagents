@@ -15,6 +15,9 @@ In your project, ask your coding agent in plain words. For example:
 > Use Toad to test our CLI: `node dist/cli.js --help` lists every command,
 > and `init` in an empty folder creates `config.json`.
 
+> Test the orders API on http://localhost:8080/api against `openapi.yaml`:
+> creating an order returns 201, and a request without a token gets 401.
+
 The agent calls `setup_project` once, writes a handoff (the target, the goal,
 and scenarios with expected outcomes) and calls `run_project_test`. It gets
 back the verdict, the report and the receipt paths.
@@ -29,6 +32,10 @@ back the verdict, the report and the receipt paths.
   program first, or let the scenario build it. Dependencies installed on a Mac
   or Windows machine may not run in Linux (native modules especially); a
   scenario can run `npm ci` itself.
+- **APIs:** start the API first and use test data. Requests run in the same
+  sandbox as CLI commands. For containers, a local API must listen on
+  `0.0.0.0`; Toad directs the tester to `host.docker.internal`. Name an
+  OpenAPI description to check responses against it.
 
 ### What makes a good test
 
@@ -53,6 +60,9 @@ cli:
   workdir: .                  # relative to the project, or absolute
   program: node dist/cli.js
   image: node:22-bookworm     # the container image CLI commands run in
+api:
+  url: http://localhost:8080/api
+  spec: openapi.yaml          # relative to workdir, which defaults to the project
 timeout_minutes: 15
 ```
 
@@ -71,7 +81,7 @@ TOAD_TEST_PASSWORD=a-test-password
 
 Then tell your agent the names, never the values. Toad passes only the names
 a handoff asks for to that run: the browser types them into the page, or CLI
-commands read them as `$NAME`. `.toad/.gitignore` keeps `.env` and `runs/`
+commands and API requests read them as `$NAME`. `.toad/.gitignore` keeps `.env` and `runs/`
 out of git.
 
 ## What setup creates
@@ -86,7 +96,7 @@ out of git.
     └── 2026-11-02T15-04-17-657Z-<id>/
         ├── handoff.yaml     what was asked, with defaults filled in
         ├── reports/report.md
-        └── receipts/        screenshots, page snapshots, command records
+        └── receipts/        screenshots, page snapshots, command and request records
 ```
 
 ## Reading the result

@@ -16,14 +16,16 @@ toad mcp ─────────────── mcp/server.mjs
       ▼
 lead ─────────────────── plans scenarios, delegates, writes the report
  ├─ web-tester ───────── Chromium via Playwright MCP  → screenshots
- └─ cli-tester ───────── toad-exec in a sandbox       → command records
+ ├─ cli-tester ───────── toad-exec in a sandbox       → command records
+ └─ api-tester ───────── curl in the same sandbox     → request records
 ```
 
 - **`agent/`** is the testing agent, a [Pi Forge]({{< link forge >}})
   project: Forge designed and generated it, and Toad tests Forge in return. A **lead** plans the request into scenarios and hands each to a
   specialist: a **web-tester** that drives Chromium through the
   [Playwright MCP](https://github.com/microsoft/playwright-mcp), or a
-  **cli-tester** that runs commands through `agent/tools/toad-exec.mjs`. Its
+  **cli-tester** or **api-tester** that runs commands or HTTP requests through
+  `agent/tools/toad-exec.mjs`. Its
   design is in `agent/.pi/system.yaml`.
 - **`mcp/`** holds the MCP server (`server.mjs`), the run viewer (`ui.mjs`),
   setup (`setup.mjs`, `agent.mjs`) and the `toad` command (`cli.mjs`). The
@@ -33,7 +35,7 @@ lead ─────────────────── plans scenarios, 
 
 The package ships the agent's definition. `toad setup` copies it and installs
 its pinned Pi packages, and runs start Forge's workflow runner directly,
-without a shell script. The model is DeepSeek, with your own key.
+without a shell script. You choose the lead and tester models and provide your own provider keys.
 
 ## Honest reports, by design
 
@@ -42,7 +44,10 @@ testers observed: never to invent, soften or repair a result, and to keep
 every receipt path exactly as given. A scenario that could not be run is
 reported as `ERROR` with the reason, not as `FAIL`.
 
-## How CLI tests run
+## How CLI and API tests run
+
+API tests send requests with `curl` in the same sandbox as CLI tests. An
+optional OpenAPI description lets the tester check responses against it.
 
 Preparing a scenario copies the project to a new workspace under
 `~/.cache/toad/scenarios/<id>`. The copy skips symlinks, `.git`, `.forge`,
