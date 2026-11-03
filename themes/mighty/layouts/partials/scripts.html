@@ -1,0 +1,23 @@
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector("[data-theme-toggle]");
+  if (btn) btn.addEventListener("click", function () {
+    var cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    var next = cur === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+  document.querySelectorAll(".doc pre").forEach(function (pre) {
+    if (!navigator.clipboard) return;
+    var b = document.createElement("button");
+    b.className = "copy"; b.type = "button"; b.textContent = "copy";
+    b.addEventListener("click", function () {
+      navigator.clipboard.writeText(pre.innerText.replace(/\n$/, "")).then(function () {
+        b.textContent = "copied"; setTimeout(function () { b.textContent = "copy"; }, 1400);
+      });
+    });
+    (pre.parentElement.classList.contains("highlight") ? pre.parentElement : pre).appendChild(b);
+  });
+})();
+</script>

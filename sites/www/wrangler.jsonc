@@ -1,0 +1,11 @@
+{
+  "name": "mightyagents-www",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [{ "pattern": "mightyagents.dev", "custom_domain": true }],
+  "workers_dev": false
+}

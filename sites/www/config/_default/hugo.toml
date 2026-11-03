@@ -1,0 +1,26 @@
+baseURL = "https://mightyagents.dev/"
+title = "Mighty Agents"
+languageCode = "en"
+theme = "mighty"
+themesDir = "../../themes"
+disableKinds = ["taxonomy", "term", "RSS", "section"]
+enableRobotsTXT = true
+
+[params]
+  kind = "home"
+  tagline = "Small agents. Mighty useful."
+  description = "Mighty Agents is a small shelf of single-purpose agents. Each does one job, runs on your machine, and plugs into the coding agent you already use."
+  [params.links]
+    home = "https://mightyagents.dev/"
+    toad = "https://toad.mightyagents.dev/"
+
+[[menus.main]]
+  name = "Agents"
+  url = "#agents"
+  weight = 1
+  [menus.main.params]
+    class = "hide-sm"
+[[menus.main]]
+  name = "GitHub"
+  url = "https://github.com/mihaiiova/mightyagents"
+  weight = 2

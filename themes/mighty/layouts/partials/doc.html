@@ -1,0 +1,36 @@
+{{- $groups := site.Params.groups }}
+{{- $pages := slice site.Home }}
+{{- range $groups }}{{ $g := . }}{{ range where (where site.RegularPages "Params.group" $g) "Params.hidden" "!=" true }}{{ $pages = $pages | append . }}{{ end }}{{ end }}
+{{- $idx := 0 }}{{ range $i, $p := $pages }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end }}
+<div class="docs">
+  <aside class="side" aria-label="Docs">
+    <details open data-side>
+      <summary>Menu</summary>
+      {{- range $groups }}{{ $g := . }}
+      <h4>{{ $g }}</h4>
+      <ul>
+        {{- if eq $g (index $groups 0) }}
+        <li><a href="{{ site.Home.RelPermalink }}"{{ if $.IsHome }} aria-current="page"{{ end }}>{{ site.Home.Params.nav | default "Overview" }}</a></li>
+        {{- end }}
+        {{- range (where site.RegularPages "Params.group" $g).ByWeight }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>{{ .Params.nav | default .Title }}</a></li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </details>
+  </aside>
+  <main class="doc">
+    {{- with .Params.group }}<div class="crumb">{{ . }}</div>{{ else }}<div class="crumb">{{ index $groups 0 }}</div>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{- with .Params.lead }}<p class="lead">{{ . | markdownify }}</p>{{ end }}
+    {{ .Content }}
+    <nav class="pager" aria-label="Pages">
+      {{- if gt $idx 0 }}{{ with index $pages (sub $idx 1) }}<a class="prev" href="{{ .RelPermalink }}"><small>Previous</small>{{ .Params.nav | default .Title }}</a>{{ end }}{{ end }}
+      {{- if lt (add $idx 1) (len $pages) }}{{ with index $pages (add $idx 1) }}<a class="next" href="{{ .RelPermalink }}"><small>Next</small>{{ .Params.nav | default .Title }}</a>{{ end }}{{ end }}
+    </nav>
+  </main>
+  {{- if and (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") (not .Params.notoc) }}
+  <aside class="toc" aria-label="On this page"><h4>On this page</h4>{{ .TableOfContents }}</aside>
+  {{- end }}
+</div>
+<script>if(matchMedia("(max-width:959px)").matches){var d=document.querySelector("[data-side]");if(d)d.open=false}</script>
