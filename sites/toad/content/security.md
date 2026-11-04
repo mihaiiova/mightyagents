@@ -17,6 +17,9 @@ kernel, and both backends allow network access. Workspaces persist until
 pruned and may contain sensitive data. Copying and workspace checks assume no
 hostile process of your user is racing them.
 
+`--sandbox none` removes even that: commands run on the machine as your
+user. Use it only on disposable CI runners, for suites you trust.
+
 ## Credentials are protected on a best-effort basis, not isolated
 
 - Handoffs carry only names (`{ "env": "NAME" }`), never values. The `.env`
@@ -37,9 +40,14 @@ hostile process of your user is racing them.
   cleanup, or the server is killed, the file stays in the runtime folder's
   `secrets/` and the result names it. Remove it once no process can still be
   using it.
+- With `toad run --env NAME`, values come from the CI job's environment
+  instead of `.toad/.env`, and the same rules apply once they are read. The
+  agent inherits the whole job environment, other secrets included, so give
+  the job only the secrets its suites need.
 - Redaction of the report and result is best effort. Screenshots, page
-  content, logs, files and transformed values can still expose secrets. Treat
-  every run folder as sensitive.
+  content, logs, files, transformed values and the Pi session transcripts in
+  `runs/<id>/sessions/` can still expose secrets. Treat every run folder, and
+  any CI artifact made from it, as sensitive.
 
 ## Paths are checked, not confined
 
@@ -52,3 +60,12 @@ the same time.
 
 The browser clicks, types and submits forms; API requests can create, change
 or delete data. Point tests at a test or staging environment, not production data.
+
+A suite's read-only default is an instruction to the agent, not an enforced
+limit; `--allow-writes` only decides which suites `toad run` starts.
+
+## Spending limits are approximate
+
+`--max-cost` adds up the prices Pi records for each reply, checked every two
+seconds, so a run can go slightly over before it stops, and a model without
+catalog prices counts as free. Set a spending limit with your provider too.

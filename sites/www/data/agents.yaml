@@ -1,8 +1,8 @@
 # The agents listed on mightyagents.dev, in order. Only list what is ready to share.
 - id: toad
   name: Toad
-  version: v0.5.0
-  kind: MCP server
+  version: v0.7.0
+  kind: MCP server and CLI
   logo: logo-toad.html
   term: term-toad.html
   summary: >-
@@ -13,6 +13,7 @@
     - Web apps in headless Chromium, with screenshots of every step
     - CLIs and HTTP APIs in a sandbox, with commands and requests recorded
     - API response checks against your OpenAPI description
+    - Saved suites that toad run reruns in CI on every deploy, with JUnit and a PR summary
     - Works with Claude Code, Codex, Pi, Cursor or any MCP client
     - Built with Pi Forge, and the agent that tests Pi Forge
   install: npm install -g github:mihaiiova/toad && toad setup

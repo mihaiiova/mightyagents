@@ -8,7 +8,8 @@ lead: "`toad setup` registers Toad with the coding agents it finds. This page is
 
 Toad is one MCP server, started with the command `toad mcp`. Register it once:
 every project uses the same server, and each call says which project it is
-for.
+for. (To run saved tests without a coding agent, see
+[`toad run`](/run-on-every-deploy/).)
 
 ## Claude Code, Codex and Pi
 

@@ -11,7 +11,7 @@ lead: One command installs Toad, and one more sets everything up. You can run se
 |---|---|
 | Node.js 22.19+ on Linux or macOS | everything (Windows: see below) |
 | An API key for a [model provider Pi supports](https://pi.dev/models) | the models the agent uses |
-| [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io), running | CLI and API tests; web tests work without it |
+| [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io), running | CLI and API tests; web tests work without it (on a CI runner without either, see [`--sandbox none`](/run-on-every-deploy/#in-ci)) |
 
 On Linux without Docker or Podman, CLI tests can use
 [Bubblewrap](https://github.com/containers/bubblewrap) 0.8 or later instead.
@@ -27,9 +27,16 @@ npm install -g github:mihaiiova/toad
 toad setup
 ```
 
-Toad installs straight from GitHub for now; it is not on npm yet. Add
-`#<tag-or-commit>` to the package name to install a specific version instead
-of `main`.
+Toad installs straight from GitHub for now; it is not on npm yet. Add a
+release tag such as `#v0.7.0`, or a commit, to the package name to install
+that version instead of `main`:
+
+```sh
+npm install -g github:mihaiiova/toad#v0.7.0
+```
+
+In CI there is no setup step: [`toad run`](/run-on-every-deploy/#in-ci)
+prepares the agent and the browser on first use.
 
 ## What setup does
 

@@ -7,7 +7,9 @@ lead: A testing agent for the web apps, command-line programs and HTTP APIs you 
 Toad is built to be called by your coding agent: Claude Code, Pi, Codex,
 Cursor or any MCP client. The agent hands Toad a test, Toad runs it
 independently, and the agent gets back **evidence instead of its own opinion
-of its work**.
+of its work**. Tests worth keeping are saved as suites in your project, and
+[`toad run`](/run-on-every-deploy/) runs them again without a coding agent:
+before a release, or in CI on every deploy.
 
 ```sh
 npm install -g github:mihaiiova/toad && toad setup
@@ -19,7 +21,8 @@ Every run ends with:
 
 - **A verdict**: `PASS`, `FAIL` or `ERROR`. A scenario that could not be run
   (the site was down, a secret was missing) is `ERROR`, never a quiet `FAIL`.
-- **A report per scenario**: what was done, what was expected, what happened.
+- **Each scenario's result**, by the name you gave it, and **a report per
+  scenario**: what was done, what was expected, what happened.
 - **Receipts**: a screenshot for every web step, and a record of every
   command or request for CLI and API steps.
 
@@ -43,7 +46,10 @@ it in the [run viewer](/viewer/).
    specialist: a **web-tester** that drives the browser, a **cli-tester**
    that runs commands, or an **api-tester** that sends HTTP requests.
 4. The testers report only what they observed. The lead writes the report,
-   and your agent gets the verdict, the report and the receipt paths.
+   and your agent gets the verdict, each scenario's result, the report and
+   the receipt paths.
+5. To keep the test, the agent saves it as a **suite**, which `toad run`
+   reruns on every deploy.
 
 More detail is in [How it's built](/how-its-built/).
 
@@ -59,3 +65,4 @@ what tests Pi Forge. Each keeps the other honest.
 - [Install Toad](/install/), about five minutes.
 - [Connect your coding agent](/connect/).
 - [Test your first project](/test-a-project/).
+- [Run tests on every deploy](/run-on-every-deploy/).
