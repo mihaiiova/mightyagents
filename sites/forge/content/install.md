@@ -39,7 +39,10 @@ Old pinned `/faur sync` cannot update directly to this release. Generate into
 a **new empty directory** from the old project's `.pi/system.yaml`, then
 review and manually reconcile your authored files and edits; renamed Faur does
 not recognize legacy ownership markers or move the old pin automatically.
-Keep the old project unchanged until you have verified the new one.
+Keep the old project unchanged until you have verified the new one. Before
+generating, review the design for unsupported declarations and relative
+paths, including vendored skill sources: relative paths resolve from the new
+project directory and may need to be adjusted.
 
 ```sh
 mkdir -p /path/to/new-agent/.pi

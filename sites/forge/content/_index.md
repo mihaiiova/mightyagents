@@ -45,9 +45,10 @@ you ──▶ /faur (maker, conversational)
    pi                           Pi runs the project without Faur or system.yaml
 ```
 
-The native files govern execution. Faur does not run inside generated projects,
-and projects pin only the packages their design needs—not Faur itself. Plain
-`pi` inherits your user configuration; the optional `run` is not an OS sandbox.
+The native files govern execution. Generated projects do not require or pin
+Faur; they pin only the packages their design needs. Plain `pi` inherits your
+user configuration and can load a globally installed Faur. The optional `run`
+is not an OS sandbox.
 
 ## Next
 
