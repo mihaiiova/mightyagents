@@ -1,5 +1,5 @@
 baseURL = "https://forge.mightyagents.dev/"
-title = "Pi Forge"
+title = "Faur"
 locale = "en"
 theme = "mighty"
 themesDir = "../../themes"
@@ -10,7 +10,7 @@ enableRobotsTXT = true
   kind = "docs"
   logo = "logo-forge.html"
   tagline = "design, generate, check and revise specialized Pi agents"
-  description = "Pi Forge designs the simplest agent for the outcome you describe, generates it as a plain Pi project, and keeps it working as your needs change."
+  description = "Faur designs the simplest agent for the outcome you describe, generates it as a plain Pi project, and helps you revise it as your needs change."
   groups = ["Getting started", "Building agents", "Running agents", "Reference"]
   [params.links]
     home = "https://mightyagents.dev/"
@@ -31,7 +31,7 @@ enableRobotsTXT = true
     class = "hide-sm"
 [[menus.main]]
   name = "GitHub"
-  url = "https://github.com/mihaiiova/pi-forge"
+  url = "https://github.com/mihaiiova/faur"
   weight = 2
 [[menus.main]]
   name = "Mighty Agents"

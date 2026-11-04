@@ -55,10 +55,10 @@ More detail is in [How it's built](/how-its-built/).
 
 ## Built with Pi Forge
 
-Toad's testing agent was designed and generated with
-[Pi Forge]({{< link forge >}}), the workshop the Mighty Agents come from, and
-it pins a Forge release like any other generated agent. In return, Toad is
-what tests Pi Forge. Each keeps the other honest.
+Toad's current testing agent was designed and generated with Pi Forge, the
+former name of [Faur]({{< link forge >}}), and still pins Pi Forge v0.29.1.
+It has not yet been regenerated with Faur v0.32.0. New projects made by Faur
+run on Pi and do not pin Faur. Toad also tests Faur.
 
 ## Next
 

@@ -7,15 +7,15 @@ lead: "`/faur` is a design conversation, not an interview. It uses what you've a
 
 ## Start with the outcome
 
-From any Pi session outside a Forge project:
+From your Pi with Faur installed:
 
 ```text
 /faur a desk that reads new papers on agents every Monday and writes me a one-page brief
 ```
 
-Forge recommends the simplest system that fits: often a single agent, or a
+Faur recommends the simplest system that fits: often a single agent, or a
 lead with one or two specialists. When you say "build it", it runs
-`forge discover` (models, your skills, MCP servers, CLIs on this machine),
+its discovery CLI (models, your skills, MCP servers, CLIs on this machine),
 writes `.pi/system.yaml`, previews the generated files, and applies them only
 after you confirm.
 
@@ -28,7 +28,7 @@ and any of them can be changed later.
 
 ## Skills, suggested from skills.sh
 
-Forge ships no skills of its own. For each agent's role it searches the open
+Faur ships no domain skills of its own. For each agent's role it searches the open
 [skills.sh](https://skills.sh) registry and suggests a few candidates, with
 source, install count and page, and shows each skill's actual `SKILL.md`
 before you decide. Your picks are pinned to a commit, installed into the
@@ -40,7 +40,7 @@ from a folder you point at.
 
 ## Documents in formats you agree on
 
-For each document an agent writes, Forge proposes a structure (purpose,
+For each document an agent writes, Faur proposes a structure (purpose,
 sections in order, a word limit, a few rules) and you change it before it is
 recorded. The agreed format goes into that agent's instructions, so every run
 produces the same shape. A document can be delivered anywhere an MCP tool
@@ -48,15 +48,19 @@ reaches: Google Drive, Notion, Slack.
 
 ## MCP, through Pi
 
-Generated systems use Pi's built-in MCP; there is nothing extra to install.
+Generated systems use Pi's built-in MCP. Declared approvals use the pinned `pi-permission-system` package.
 Declare each server under `integrations.mcp` and choose per agent which tools
 it gets: `mcp:<server>` or `mcp:<server>/<tool>` for a specialist, `mcp` for
 the orchestrator.
 
 - `includeTools` lists the tools agents may use.
 - `excludeTools` hides tools from everyone.
-- `approveTools` makes a tool ask you before every call. Without a UI, such a
-  call is blocked.
+- `approveTools` makes a tool ask before a call through `pi-permission-system`. Without a UI, such a call is blocked.
+
+The lead's MCP boundary is advisory, not enforced. A user-level extension that
+replaces built-in MCP can change exposure and approval behavior under plain
+`pi`; MCP designs provide an optional isolated Pi home and `/faur check`
+reports the conflict.
 
 ## Command-line tools, with permissions
 
@@ -73,16 +77,14 @@ integrations:
       approve: true   # the default: you approve each run
 ```
 
-Give it to an agent with `cli:create-issue` in its `tools`. Commands run
-without a shell, with your own CLI logins. When the orchestrator needs a
-command it has no tool for, it asks with `request_permission`: allow once,
-always (saved to `system.yaml`), or deny.
+Give it to an agent with `cli:create-issue` in its `tools`. The pinned
+`pi-commands` package executes declared commands without a shell, with your
+own CLI logins. A command that requires approval is blocked when there is no
+UI. If an agent lacks a needed command, change the design; there is no
+`request_permission` tool.
 
-## Memory and prompts
+## Prompts and capabilities
 
-- **Memory is always on.** The orchestrator keeps short notes (up to 4,000
-  characters) in `.pi/MEMORY.md`: corrections, preferences, and what worked
-  when something failed. It's plain Markdown you can edit.
-- **Prompts describe roles, not tool manuals.** What an agent can use is
-  generated from `system.yaml` into a "What you can use" section, so removing
-  an integration also removes it from what the agent is told.
+The lead's authored prompt and generated "What you can use" section live in
+`.pi/APPEND_SYSTEM.md`, which Pi loads natively. Native project files govern
+execution; `.pi/system.yaml` records the last design agreed with Faur.

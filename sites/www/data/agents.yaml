@@ -15,24 +15,24 @@
     - API response checks against your OpenAPI description
     - Saved suites that toad run reruns in CI on every deploy, with JUnit and a PR summary
     - Works with Claude Code, Codex, Pi, Cursor or any MCP client
-    - Built with Pi Forge, and the agent that tests Pi Forge
+    - Built with Pi Forge, and an agent that tests its successor Faur
   install: npm install -g github:mihaiiova/toad && toad setup
   repo: https://github.com/mihaiiova/toad
 
 - id: forge
-  name: Pi Forge
-  version: v0.29.1
+  name: Faur
+  version: v0.32.0
   kind: Pi package
   logo: logo-forge.html
   term: term-forge.html
   summary: >-
     The workshop the other agents come from. Describe the outcome you want;
-    Forge designs the simplest agent that gets there, generates it as a plain
+    Faur designs the simplest agent that gets there, generates it as a plain
     Pi project, and keeps it working as your needs change.
   points:
     - A design conversation, not a form, and nothing is written until you confirm
     - Models, skills, MCP servers and CLI permissions chosen per agent
-    - Checks and revisions with a diff you approve, release pins you can roll back
+    - Native-file drift review and revisions with a diff you approve; roll back with git
     - Toad was built with it, and it is tested with Toad
-  install: pi install git:github.com/mihaiiova/pi-forge@v0.29.1
-  repo: https://github.com/mihaiiova/pi-forge
+  install: pi install git:github.com/mihaiiova/faur@v0.32.0
+  repo: https://github.com/mihaiiova/faur

@@ -2,12 +2,12 @@
 title: Reference
 group: Reference
 weight: 40
-lead: The `system.yaml` shape, the Forge CLI, and project setup checks.
+lead: The `system.yaml` design record, the Faur CLI, and project setup checks.
 ---
 
 ## system.yaml
 
-The compact desired state of a generated agent. Every agent names its own
+The last design agreed with Faur; native Pi files govern execution. Every agent names its own
 model and the skills it receives:
 
 ```yaml
@@ -33,29 +33,28 @@ skills:
     source: skills:coreyhaines31/marketingskills/skills/seo-audit@17772c7a80b7b8c7a47af30f648374cd8bd8adc5
 ```
 
-A coding orchestrator can opt into repository instructions with
-`projectContext: [AGENTS.md]`. The listed files are appended to its prompt
-and also enable Pi's `edit` tool, which can edit **any accessible file**.
+Plain Pi loads its applicable context files, including parent `AGENTS.md`
+files. Review untrusted instructions before a run.
 
 Every field, validation rule and the file-ownership contract are in
-[`schema.md`](https://github.com/mihaiiova/pi-forge/blob/master/skills/forge/schema.md).
+[`schema.md`](https://github.com/mihaiiova/faur/blob/v0.32.0/skills/faur/schema.md).
 
-## Forge CLI
+## Faur CLI
 
-The deterministic tool behind `/faur`, run from a Forge checkout:
+The deterministic tool behind `/faur`, run from a Faur checkout:
 
 | Command | |
 |---|---|
-| `forge.mjs discover [dir]` | Models, your skills, MCP servers and CLIs on this machine |
-| `forge.mjs validate <dir>` | Validate a project's `system.yaml` |
-| `forge.mjs generate <dir> [--dry-run]` | Preview, then write, the generated files |
-| `forge.mjs modify <dir> [--dry-run]` | Apply a structured change |
-| `forge.mjs check-agent <project> [--connect]` | Check capabilities outside a session; `--connect` also lists MCP tools |
-| `forge.mjs search-skills <words…>` | Search skills.sh |
-| `forge.mjs preview-skill <owner/repo@skill>` | Show a skill's files before installing |
+| `faur.mjs discover [dir]` | Models, your skills, MCP servers and CLIs on this machine |
+| `faur.mjs validate <dir>` | Validate a project's `system.yaml` |
+| `faur.mjs generate <dir> [--dry-run]` | Preview, then write, the generated files |
+| `faur.mjs modify <dir> [--dry-run]` | Apply a structured change |
+| `faur.mjs check-agent <project> [--connect]` | Check capabilities outside a session; `--connect` also lists MCP tools |
+| `faur.mjs search-skills <words…>` | Search skills.sh |
+| `faur.mjs preview-skill <owner/repo@skill>` | Show a skill's files before installing |
 
-All live in `skills/forge/forge.mjs`, for example
-`node skills/forge/forge.mjs generate ./my-agent --dry-run`.
+All live in `skills/faur/faur.mjs`, for example
+`node skills/faur/faur.mjs generate ./my-agent --dry-run`.
 
 ## Setup checks
 
@@ -77,5 +76,5 @@ marked `needsRoot` are printed, not run.
 ## Tests
 
 ```sh
-bash skills/forge/test/test.sh
+bash skills/faur/test/test.sh
 ```

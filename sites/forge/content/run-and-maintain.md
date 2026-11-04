@@ -2,71 +2,63 @@
 title: Run and maintain
 group: Running agents
 weight: 30
-lead: A generated agent starts with `./run`. From then on, `/faur` is the one command for checking and changing it.
+lead: Run a generated project with plain Pi. Maintain it from your own Pi with Faur installed, or edit native files directly.
 ---
 
 ## Start it
 
 ```sh
-./run              # interactive
-./run -p "…"       # one prompt, then exit
-./run --workflow <name> --input key=value
+cd /path/to/project
+pi                                      # interactive
+pi --approve -p "A request" </dev/null  # headless one-shot
+pi --approve -p "/skill:workflow A request" </dev/null
 ```
 
-`./run` isolates the project from your global Pi configuration: its own config
-folder and its own Pi logins (`/login` once per project). On every start it
-checks that each agent will get the tools and skills it is declared to have,
-and names any that are missing.
+A workflow is a skill. In print mode, Pi waits for stdin to close; `--approve`
+allows the project resources to load in a headless run. A successful exit means
+the run completed, not necessarily that the task succeeded. Pi installs
+missing pinned project packages at startup unless offline.
 
-The first `./run` installs the pinned packages, so it needs network access to
-GitHub.
+Plain `pi` inherits your user-level Pi configuration. Projects with MCP servers
+also get an optional `./run`, which sets `PI_CODING_AGENT_DIR` to the project's
+`.faur/pi-home` and starts Pi. It isolates the Pi agent directory, **not the
+operating system**: environment variables and credentials are inherited,
+`~/.agents/skills` and parent `AGENTS.md` files can still load, and tools run
+with your permissions. A global extension that replaces Pi's built-in MCP can
+change enforcement under plain `pi`; `/faur check` reports the conflict.
 
 ## Change it
 
-Inside a generated project:
+From your own Pi with Faur installed, in the project directory:
 
 | Command | What it does |
 |---|---|
-| `/faur [request]` | Revise the agent, for example `/faur add a research specialist` or `/faur use a cheaper model for the writer`. When a proposal is ready you can **discuss**, **apply** or **discard** it. |
-| `/faur check` | Validate `system.yaml`, compare the generated files with it, and run the launch check. |
-| `/faur status` | Agents and models, capabilities, the pinned Forge release and whether a newer one exists, pending permission requests. |
-| `/faur sync` | Move to the newest Forge release after two confirmations, or rebuild with the current one. |
-| `/faur env [set NAME]` | Declare and set environment variables; values go to the project's gitignored `.env`. |
-| `/faur permissions [add \| remove <name> \| review]` | Manage which commands agents may run. |
+| `/faur [request]` | Propose a revision; discuss, apply or discard the preview. |
+| `/faur check` | Validate the record, compare files and report capability evidence. |
+| `/faur status` | Summarize the design and last check. |
+| `/faur sync` | Preview rebuilding with the Faur you are running; apply only after confirmation. |
+| `/faur env` | Report declared variable status without showing values. |
+| `/faur permissions [add \| remove <name>]` | Manage declared commands. |
+| `/faur drift adopt <path>` | Preview adopting supported native edits into the design record. |
+| `/faur drift reapply <path>` | Preview reapplying supported files from the design. |
+| `/faur drift reconcile <path> adopt=…` | Preview a supported selected-field reconciliation. |
 
-Headless sessions never apply a change.
-
-## Pin, update, roll back
-
-A generated project pins one Forge release in `.pi/settings.json`, for example
-`git:github.com/mihaiiova/pi-forge@v0.29.1`. Nothing is copied into the
-project, and Pi never moves a pinned tag by itself.
-
-`/faur sync` asks twice:
-
-1. **Run the new release to preview it?** The dialog names the tag, its commit
-   and a link to the changes. Nothing is written yet.
-2. **Apply it?** The preview shows the pin change and every file the new
-   release generates differently. Approving writes them and installs the new
-   pin.
-
-Declining either step leaves the project unchanged. To roll back, use git:
-
-```sh
-git checkout <commit> -- .pi run README.md
-```
-
-Then restart `./run`, and Pi installs the older pin again.
+Faur reports known native-only features and preserves them or refuses a
+conflicting change when it cannot safely preserve them. Detection is not a
+complete inventory of every Pi feature; ambiguous cases need manual attention.
+Changes are previewed, approved and reversible with git. Headless sessions
+cannot approve them.
 
 ## Credentials and trust
 
-Declare variable names under `integrations.env` and set values with
-`/faur env set NAME`, which asks for the value interactively, never through
-the model. Don't put credentials in `--input`: workflow inputs become prompt
-text.
+Set variables in the environment Pi starts in, or load a gitignored `.env`
+with direnv. **Pi does not read `.env` itself**. Configure integration secret
+files outside Faur, and configure the integration to read them. Never put
+secrets into prompts.
 
-**`./run` is not an OS sandbox.** Your shell environment is inherited, and
-Pi, agents, tools and their subprocesses can access inherited credentials.
-Tool approval and `secret: true` do not isolate values, and Forge does not
-guarantee redaction of tool output, screenshots, logs or artifacts. Use
-trusted agents and tools, and prefer restricted test accounts.
+Pi, agents, tools and subprocesses can access inherited credentials; neither
+an optional launcher nor tool approval gives same-user confidentiality. Use
+trusted agents, tools and restricted test accounts. Output, screenshots, logs
+and artifacts may expose secrets.
+
+For the breaking migration from Pi Forge, see [Install](/install/#projects-made-by-pi-forge).

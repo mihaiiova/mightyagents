@@ -22,8 +22,9 @@ lead ─────────────────── plans scenarios, 
  └─ api-tester ───────── curl in the same sandbox     → request records
 ```
 
-- **`agent/`** is the testing agent, a [Pi Forge]({{< link forge >}})
-  project: Forge designed and generated it, and Toad tests Forge in return. A **lead** plans the request into scenarios and hands each to a
+- **`agent/`** is the testing agent, generated with Pi Forge (the former
+  name of [Faur]({{< link forge >}})). Toad's current agent still pins Pi Forge
+  v0.29.1; it has not yet migrated to Faur v0.32.0. A **lead** plans the request into scenarios and hands each to a
   specialist: a **web-tester** that drives Chromium through the
   [Playwright MCP](https://github.com/microsoft/playwright-mcp), or a
   **cli-tester** or **api-tester** that runs commands or HTTP requests through
@@ -38,7 +39,7 @@ lead ─────────────────── plans scenarios, 
 - **`skills/toad-mcp/SKILL.md`** is the guide served to coding agents.
 
 The package ships the agent's definition. `toad setup` copies it and installs
-its pinned Pi packages, and runs start Forge's workflow runner directly,
+its pinned Pi packages, and runs start the pinned Pi Forge workflow runner directly,
 without a shell script. You choose the lead and tester models and provide your own provider keys.
 A run on other models (from `toad.yaml` or `toad run --model`) uses a cached
 copy of the agent with those models applied, so the shared agent never
