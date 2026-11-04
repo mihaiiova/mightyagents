@@ -2,17 +2,19 @@
 title: How it's built
 group: Under the hood
 weight: 50
-lead: A small team of agents behind one MCP server. The server runs the workflow; the agents do the testing.
+lead: A small team of agents behind one MCP server and one command. Both run the same workflow; the agents do the testing.
 ---
 
 ## The pieces
 
 ```
-your coding agent
-      │  MCP: run_project_test(handoff)
-      ▼
-toad mcp ─────────────── mcp/server.mjs
-      │  runs the Forge workflow, maps the result back
+your coding agent              CI, or you
+      │  MCP: run_project_test     │  toad run (saved suites)
+      ▼                            ▼
+toad mcp ── mcp/server.mjs     toad run ── mcp/toad-run.mjs
+      └─────────────┬──────────────┘
+                    ▼
+run engine ───────────── mcp/run.mjs: setup, the Forge workflow, results
       ▼
 lead ─────────────────── plans scenarios, delegates, writes the report
  ├─ web-tester ───────── Chromium via Playwright MCP  → screenshots
@@ -27,22 +29,34 @@ lead ─────────────────── plans scenarios, 
   **cli-tester** or **api-tester** that runs commands or HTTP requests through
   `agent/tools/toad-exec.mjs`. Its
   design is in `agent/.pi/system.yaml`.
-- **`mcp/`** holds the MCP server (`server.mjs`), the run viewer (`ui.mjs`),
-  setup (`setup.mjs`, `agent.mjs`) and the `toad` command (`cli.mjs`). The
-  server runs the agent's workflow and maps the result onto the tool result.
-  It holds no testing logic.
+- **`mcp/`** holds the run engine (`run.mjs`), which runs any setup
+  commands and the agent's workflow and maps the result onto a verdict and
+  each scenario's result; the MCP server (`server.mjs`) and `toad run`
+  (`toad-run.mjs`), which both use it; the run viewer (`ui.mjs`); setup
+  (`setup.mjs`, `agent.mjs`) and the `toad` command (`cli.mjs`). None of them
+  holds testing logic.
 - **`skills/toad-mcp/SKILL.md`** is the guide served to coding agents.
 
 The package ships the agent's definition. `toad setup` copies it and installs
 its pinned Pi packages, and runs start Forge's workflow runner directly,
 without a shell script. You choose the lead and tester models and provide your own provider keys.
+A run on other models (from `toad.yaml` or `toad run --model`) uses a cached
+copy of the agent with those models applied, so the shared agent never
+changes under a run in progress.
+
+Each project run keeps its Pi sessions in its folder. That is where the run's
+cost comes from: Toad adds up the price Pi records for every reply of the
+lead and each tester, which is also how `toad run --max-cost` knows when to
+stop.
 
 ## Honest reports, by design
 
 The lead never tests anything itself, and it is told to report only what the
 testers observed: never to invent, soften or repair a result, and to keep
 every receipt path exactly as given. A scenario that could not be run is
-reported as `ERROR` with the reason, not as `FAIL`.
+reported as `ERROR` with the reason, not as `FAIL`. The report starts with a
+`Results:` block, one line per scenario by its exact name; Toad reads it, and
+a scenario missing from it counts as `ERROR`.
 
 ## How CLI and API tests run
 
@@ -58,7 +72,12 @@ first.
 
 Preparation checks that the sandbox starts and that only the workspace and
 its home are writable. A failed preparation is an infrastructure error.
-Nothing ever runs on the host instead.
+Nothing ever runs on the host instead, unless you ask for it with
+`--sandbox none`.
+
+When a handoff has setup commands, Toad runs them once in a prepared
+workspace, and every scenario's workspace starts as a copy of it, installs
+included.
 
 ### In a container
 
@@ -80,6 +99,14 @@ On Linux, commands run in new user, PID, IPC and UTS namespaces with the
 host's `/usr` and some system configuration read-only. They share the host
 network, including `localhost`.
 
+### Without a sandbox
+
+Only when you pass `--sandbox none` to `toad run` (or set
+`TOAD_CLI_SANDBOX=none`), for CI runners without Docker, Podman or
+Bubblewrap: commands run on the machine as your user, in the copied
+workspace, with only `PATH`, a `HOME` and `TMPDIR` inside the workspace, and
+the selected credentials. There is no isolation, and the receipts say so.
+
 Either way, commands run through `/bin/sh` with no input unless provided,
 stop after 120 seconds, and each produces a receipt. Exact secret values of at
 least four characters are redacted from recorded text, but redaction is not
@@ -98,4 +125,5 @@ cd agent
 ```
 
 The last line of output is JSON with `status` and the report in `answer`,
-whose first line is `Verdict: PASS`, `FAIL` or `ERROR`.
+whose first line is `Verdict: PASS`, `FAIL` or `ERROR`, followed by a
+`Results:` block with one `- PASS | <scenario name>` line per scenario.

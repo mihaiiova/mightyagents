@@ -20,7 +20,11 @@ In your project, ask your coding agent in plain words. For example:
 
 The agent calls `setup_project` once, writes a handoff (the target, the goal,
 and scenarios with expected outcomes) and calls `run_project_test`. It gets
-back the verdict, the report and the receipt paths.
+back the verdict, each scenario's result, the report and the receipt paths.
+
+To keep the test, ask for a suite: *"Save that as a Toad suite tagged
+smoke."* The agent writes `.toad/suites/<name>.yaml`, which you commit and
+[run on every deploy](/run-on-every-deploy/).
 
 ### Before you ask
 
@@ -47,6 +51,8 @@ The more specific the ask, the more useful the verdict:
   much as the happy path.
 - **Say what's off limits.** "Don't touch existing users" ends up in the
   handoff's limitations.
+- **Give each scenario a distinct name.** Results come back by name, and the
+  run page shows each one with its own receipts.
 
 ## 2. Save defaults (optional)
 
@@ -60,14 +66,40 @@ cli:
   workdir: .                  # relative to the project, or absolute
   program: node dist/cli.js
   image: node:22-bookworm     # the container image CLI commands run in
+  setup:                      # run once in the sandbox before any scenario
+    - npm ci --ignore-scripts
 api:
   url: http://localhost:8080/api
   spec: openapi.yaml          # relative to workdir, which defaults to the project
+models:                       # optional: this project's models, over toad setup's
+  lead: anthropic/claude-sonnet-5-5
+  tester: anthropic/claude-haiku-5-5
 timeout_minutes: 15
 ```
 
 It holds no secrets, so commit it. Pick an `image` with your CLI's runtime, for
 example `python:3.12` or `golang:1.23`.
+
+### Setup commands
+
+`setup` (for `cli` and `api`) lists commands Toad runs once, in the sandbox,
+before any scenario: installing dependencies, or a tool the tests need that
+your project does not declare. Every scenario starts from a copy of the
+result, and each command is recorded under `receipts/setup/`. If one fails,
+the run ends as `ERROR` with `status: setup_failed` and no scenario runs. The
+sandbox's root is read-only, so install locally:
+
+```yaml
+cli:
+  setup:
+    - npm ci --ignore-scripts
+    - npm install --no-save some-tool@1.2.3   # its command is node_modules/.bin/some-tool
+```
+
+By default a tester that finds a program or module missing reports it as a
+missing prerequisite (`ERROR`) rather than installing it. A handoff with
+`"allow_installs": true` lets the tester install it inside the sandbox,
+record the install, and retry.
 
 ## 3. Add test logins (if needed)
 
@@ -92,11 +124,15 @@ out of git.
 ├── .env             secret values (ignored by git)
 ├── .env.example     the names, for your team (commit it)
 ├── .gitignore
+├── suites/          saved suites for toad run (commit them)
+│   └── example.yaml     a commented template
 └── runs/            one folder per run (ignored by git)
     └── 2026-11-02T15-04-17-657Z-<id>/
         ├── handoff.yaml     what was asked, with defaults filled in
+        ├── state.json       progress, verdict, each scenario's result, cost
         ├── reports/report.md
-        └── receipts/        screenshots, page snapshots, command and request records
+        ├── receipts/        screenshots, page snapshots, command and request records
+        └── sessions/        the agents' Pi sessions (transcripts)
 ```
 
 ## Reading the result
@@ -106,7 +142,12 @@ The result has two parts that are easy to mix up:
 - **`verdict`** is about your app: `PASS`, `FAIL`, `ERROR`, or `UNKNOWN`
   when the report has none.
 - **`status`** is about the run itself: `ok`, `timeout`, `blocked`,
-  `cancelled`, `error` or `configuration_error`.
+  `cancelled`, `error`, `configuration_error`, `setup_failed` or
+  `cost_limit`.
+
+**`scenarios`** gives each scenario's result by its name. A scenario the
+report left out is `ERROR` with `missing: true`, never a silent pass, and the
+verdict never contradicts a scenario: any `FAIL` makes the run `FAIL`.
 
 A failing test is a normal result. A run that could not complete is a tool
 error. The full shape is in the [reference](/reference/#handoff).

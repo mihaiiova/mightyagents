@@ -12,8 +12,18 @@ toad ui --port 9000
 ```
 
 The viewer shows the runs of every project Toad is set up in, newest first,
-with a project filter. Open a run to see its scenarios, the report, every
-screenshot and every recorded command.
+with a project filter. Each run is listed by its title. Open one to see:
+
+- the goal, and a tally of passed, failed and errored scenarios;
+- each scenario with its result and its own receipts, and the setup
+  commands when there were any;
+- the report, every screenshot and every recorded command or request;
+- for runs started by [`toad run`](/run-on-every-deploy/), a *toad run* tag,
+  what the run cost and the models it used.
+
+Two buttons copy the run's handoff, with every scenario or only the ones that
+failed or errored, for your coding agent to run again. A run whose server
+stopped before it finished is shown as interrupted, not as running.
 
 It listens on localhost only.
 
