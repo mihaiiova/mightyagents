@@ -37,7 +37,7 @@ Plain Pi loads its applicable context files, including parent `AGENTS.md`
 files. Review untrusted instructions before a run.
 
 Every field, validation rule and the file-ownership contract are in
-[`schema.md`](https://github.com/mihaiiova/faur/blob/v0.33.0/skills/faur/schema.md).
+[`schema.md`](https://github.com/mihaiiova/faur/blob/v0.34.0/skills/faur/schema.md).
 
 ## Faur CLI
 

@@ -10,7 +10,7 @@ skills, packages, MCP servers and commands—without adding a workflow engine,
 scheduler or launcher of its own.
 
 ```sh
-pi install git:github.com/mihaiiova/faur@v0.33.0
+pi install git:github.com/mihaiiova/faur@v0.34.0
 ```
 
 Then, in your Pi session: `/faur <the outcome you want>`.

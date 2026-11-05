@@ -17,11 +17,18 @@ lead: Faur is a Pi package. Install it in your Pi, then use `/faur` to design an
 ## Install from a release tag
 
 ```sh
-pi install git:github.com/mihaiiova/faur@v0.33.0
+pi install git:github.com/mihaiiova/faur@v0.34.0
 ```
 
 Generated projects do not pin Faur. They run with Pi and the packages they
 actually need, even when Faur is not installed.
+
+To upgrade, remove the old tag first so only one `/faur` loads:
+
+```sh
+pi remove git:github.com/mihaiiova/faur@v0.33.0
+pi install git:github.com/mihaiiova/faur@v0.34.0
+```
 
 ## Install from a checkout
 

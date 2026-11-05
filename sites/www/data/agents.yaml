@@ -21,7 +21,7 @@
 
 - id: faur
   name: Faur
-  version: v0.33.0
+  version: v0.34.0
   kind: Pi package
   logo: logo-faur.html
   term: term-faur.html
@@ -35,5 +35,5 @@
     - Models, skills, MCP servers and CLI approvals chosen per agent
     - Generated projects run on plain Pi, never pin Faur, and a minimal agent pins nothing
     - Revisions and hand edits reviewed with a diff you approve; roll back with git
-  install: pi install git:github.com/mihaiiova/faur@v0.33.0
+  install: pi install git:github.com/mihaiiova/faur@v0.34.0
   repo: https://github.com/mihaiiova/faur

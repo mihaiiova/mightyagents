@@ -52,6 +52,16 @@ From your own Pi with Faur installed, in the project directory:
 | `/faur drift reapply <path>` | Preview reapplying supported files from the design. |
 | `/faur drift reconcile <path> adopt=…` | Preview a supported selected-field reconciliation. |
 
+While `/faur` maintains a project, a banner above the input says so: the
+agent's own tools are off, and your replies continue the conversation with
+Faur until you apply, discard or leave with `/faur exit`. If you ask for the
+agent's own work there (a report, research), Faur offers **Leave /faur and
+ask my agent**, which hands your request back to the agent.
+
+Every change ends in a dialog that says which files it writes, shows the
+first changed lines and keeps **Let's discuss**, **Apply** and **Discard** on
+screen; **Show the full preview** opens every change in a scrollable view.
+
 When a file you edited by hand blocks a change, Faur shows what differs and
 how to keep or discard your edit; it never overwrites it. Faur reports known
 native-only features and preserves them, or refuses a change it cannot safely
