@@ -4,7 +4,7 @@
 
 The source for [mightyagents.dev](https://mightyagents.dev) and the docs of each
 agent listed there: [toad.mightyagents.dev](https://toad.mightyagents.dev) and
-[forge.mightyagents.dev](https://forge.mightyagents.dev).
+[faur.mightyagents.dev](https://faur.mightyagents.dev).
 
 ## Layout
 
@@ -12,6 +12,7 @@ agent listed there: [toad.mightyagents.dev](https://toad.mightyagents.dev) and
 themes/mighty/   the shared look: layouts, partials, one stylesheet
 sites/www/       mightyagents.dev; the agents shown come from data/agents.yaml
 sites/toad/      toad.mightyagents.dev, the Toad docs
+sites/faur/      faur.mightyagents.dev, the Faur docs
 ```
 
 Each site is a [Hugo](https://gohugo.io) site deployed as a Cloudflare Worker
@@ -22,7 +23,7 @@ with static assets (`wrangler.jsonc` in each site folder).
 Needs Hugo extended (0.158+) and, to deploy, [Wrangler](https://developers.cloudflare.com/workers/wrangler/).
 
 ```sh
-make dev       # www :1313, toad :1314, forge :1315
+make dev       # www :1313, toad :1314, faur :1315
 make build
 make deploy
 ```

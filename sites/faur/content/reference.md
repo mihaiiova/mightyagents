@@ -37,24 +37,27 @@ Plain Pi loads its applicable context files, including parent `AGENTS.md`
 files. Review untrusted instructions before a run.
 
 Every field, validation rule and the file-ownership contract are in
-[`schema.md`](https://github.com/mihaiiova/faur/blob/v0.32.0/skills/faur/schema.md).
+[`schema.md`](https://github.com/mihaiiova/faur/blob/v0.33.0/skills/faur/schema.md).
 
 ## Faur CLI
 
-The deterministic tool behind `/faur`, run from a Faur checkout:
+The deterministic tool behind `/faur`, run from a Faur checkout as
+`node src/faur.mjs <command>`:
 
 | Command | |
 |---|---|
-| `faur.mjs discover [dir]` | Models, your skills, MCP servers and CLIs on this machine |
-| `faur.mjs validate <dir>` | Validate a project's `system.yaml` |
-| `faur.mjs generate <dir> [--dry-run]` | Preview, then write, the generated files |
-| `faur.mjs modify <dir> [--dry-run]` | Apply a structured change |
-| `faur.mjs check-agent <project> [--connect]` | Check capabilities outside a session; `--connect` also lists MCP tools |
-| `faur.mjs search-skills <words…>` | Search skills.sh |
-| `faur.mjs preview-skill <owner/repo@skill>` | Show a skill's files before installing |
+| `discover [dir] [--cli <name>]…` | Models, your skills, MCP servers and the CLIs you name |
+| `fetch <url> [--offset <n>]` | Read a public `https://` page as untrusted text (a GitHub repo URL returns its README) |
+| `validate <dir>` | Validate a project's `system.yaml` |
+| `generate <dir> [--dry-run] [--yes]` | Preview, then write, the generated files |
+| `modify <dir> [--dry-run] [--yes]` | Reconcile the project with its design |
+| `change <dir> --operations <file> [--dry-run] [--yes]` | Preview or apply a structured change |
+| `check-agent <project> [--connect]` | Check capabilities without a model call; `--connect` starts MCP servers |
+| `search-skills <words…>` | Search skills.sh |
+| `preview-skill <owner/repo@skill>` | Show a skill's files before installing |
+| `import <dir>` | Reconstruct `system.yaml` from an existing Pi project |
 
-All live in `skills/faur/faur.mjs`, for example
-`node skills/faur/faur.mjs generate ./my-agent --dry-run`.
+For example: `node src/faur.mjs generate ./my-agent --dry-run`.
 
 ## Setup checks
 
@@ -69,12 +72,15 @@ setup:
 ```
 
 `/faur check` reports unmet steps, and `/faur setup` previews installs and asks
-first. **Command checks run shell code with your permissions**, including
-during checks and workflow startup, so use only declarations you trust. Steps
-marked `needsRoot` are printed, not run.
+first. **Command checks run shell code with your permissions**, so use only
+declarations you trust. Steps marked `needsRoot` are printed, not run.
 
 ## Tests
 
 ```sh
-bash skills/faur/test/test.sh
+bash test/test.sh
 ```
+
+Opt-in gates: `RUN_FAUR_DELEGATION_TEST=1` (real Pi with a local fake model),
+`RUN_FAUR_LIVE_TESTS=1` and `RUN_CLEAN_ENV_TEST=1` (real providers; they cost
+tokens).

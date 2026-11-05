@@ -13,7 +13,7 @@ enableRobotsTXT = true
   [params.links]
     home = "https://mightyagents.dev/"
     toad = "https://toad.mightyagents.dev/"
-    forge = "https://forge.mightyagents.dev/"
+    faur = "https://faur.mightyagents.dev/"
 
 [[menus.main]]
   name = "Agents"

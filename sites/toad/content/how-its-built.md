@@ -23,7 +23,7 @@ lead ─────────────────── plans scenarios, 
 ```
 
 - **`agent/`** is the testing agent, generated with Pi Forge (the former
-  name of [Faur]({{< link forge >}})). Toad's current agent still pins Pi Forge
+  name of [Faur]({{< link faur >}})). Toad's current agent still pins Pi Forge
   v0.29.1; it has not yet migrated to Faur v0.32.0. A **lead** plans the request into scenarios and hands each to a
   specialist: a **web-tester** that drives Chromium through the
   [Playwright MCP](https://github.com/microsoft/playwright-mcp), or a

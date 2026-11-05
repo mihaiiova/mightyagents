@@ -14,7 +14,7 @@ enableRobotsTXT = true
   groups = ["Getting started", "Using Toad", "Under the hood", "Reference"]
   [params.links]
     home = "https://mightyagents.dev/"
-    forge = "https://forge.mightyagents.dev/"
+    faur = "https://faur.mightyagents.dev/"
 
 [markup]
   [markup.highlight]

@@ -1,4 +1,4 @@
-baseURL = "https://forge.mightyagents.dev/"
+baseURL = "https://faur.mightyagents.dev/"
 title = "Faur"
 locale = "en"
 theme = "mighty"
@@ -8,7 +8,7 @@ enableRobotsTXT = true
 
 [params]
   kind = "docs"
-  logo = "logo-forge.html"
+  logo = "logo-faur.html"
   tagline = "design, generate, check and revise specialized Pi agents"
   description = "Faur designs the simplest agent for the outcome you describe, generates it as a plain Pi project, and helps you revise it as your needs change."
   groups = ["Getting started", "Building agents", "Running agents", "Reference"]
