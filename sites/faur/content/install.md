@@ -23,12 +23,9 @@ pi install git:github.com/mihaiiova/faur@v0.34.0
 Generated projects do not pin Faur. They run with Pi and the packages they
 actually need, even when Faur is not installed.
 
-To upgrade, remove the old tag first so only one `/faur` loads:
-
-```sh
-pi remove git:github.com/mihaiiova/faur@v0.33.0
-pi install git:github.com/mihaiiova/faur@v0.34.0
-```
+To upgrade, install the new tag; it replaces the old one. Pi pins tags, so
+`pi update` does not move you to a new release. `/faur sync` then rebuilds a
+project with the Faur you are running.
 
 ## Install from a checkout
 
